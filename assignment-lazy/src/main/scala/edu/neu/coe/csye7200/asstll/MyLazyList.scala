@@ -405,11 +405,8 @@ object MyLazyList {
    * @return a <code>ListLike[X]</code> with an infinite number of element (whose values are <code>x</code>,
    *         <code>x+step</code>, etc.).
    */
-  def from(start: Int, step: Int): ListLike[Int] = {
-// TO BE IMPLEMENTED 
+  def from(start: Int, step: Int): ListLike[Int] = new MyLazyList(start, () => from(start + step, step))
 
-???
-  }
 
 
   /**
