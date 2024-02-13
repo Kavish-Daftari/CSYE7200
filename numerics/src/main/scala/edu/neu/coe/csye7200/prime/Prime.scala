@@ -1,7 +1,7 @@
 package edu.neu.coe.csye7200.prime
 
-import com.typesafe.scalalogging.Logger
-import edu.neu.coe.csye7200.prime.Prime.{logger, primes}
+//import com.typesafe.scalalogging.Logger
+import edu.neu.coe.csye7200.prime.Prime.{primes}
 
 case class Prime(x: BigInt, var valid: Option[Boolean]) {
 
@@ -27,26 +27,28 @@ case class Prime(x: BigInt, var valid: Option[Boolean]) {
 
   /**
    * Mutating method to determine if this Prime is truly prime.
+   * As a side-effect, <code>valid</code> will be set to Some(true) if truly prime, otherwise, Some(false)
    *
    * @return a Boolean.
    */
   private def validate: Boolean = {
-    def composite = primes.takeWhile(p => p.x * p.x <= x).exists(p => x % p.x == 0)
 
-    val isPrime = x == BigInt(2) || x == BigInt(3) || !composite
     valid match {
       case None =>
-        logger.whenDebugEnabled(if (isPrime) logger.debug(s"$x is prime"))
+        def composite = primes.takeWhile(p => p.x * p.x <= x).exists(p => x % p.x == 0)
+        val isPrime = x == BigInt(2) || x == BigInt(3) || !composite
+        //        logger.whenDebugEnabled(if (isPrime) logger.debug(s"$x is prime"))
         valid = Some(isPrime)
+        isPrime
       case _ =>
+        isPrime
     }
-    isPrime
   }
 }
 
 object Prime {
 
-  val logger: Logger = com.typesafe.scalalogging.Logger(classOf[Prime])
+  //  val logger: Logger = com.typesafe.scalalogging.Logger(classOf[Prime])
 
   def apply(x: BigInt): Prime = new Prime(x, None)
 
@@ -90,3 +92,32 @@ object Prime {
 object Eratosthenes extends App {
   println(primes take 10 to List)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
