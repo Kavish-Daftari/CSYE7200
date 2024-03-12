@@ -1,8 +1,5 @@
 package edu.neu.coe.csye7200.asstfc
 
-import edu.neu.coe.csye7200.asstfc.Movie.MoviesProtocol.movieFormat
-import spray.json.DefaultJsonProtocol.immSeqFormat
-
 import scala.collection.mutable
 import scala.io.{Codec, Source}
 import scala.util._
@@ -103,15 +100,18 @@ object Movie extends App {
 
   //Hint: You may refer to the slides discussed in class for how to serialize object to json
   object MoviesProtocol extends DefaultJsonProtocol {
-    implicit val nameFormat: RootJsonFormat[Name] = jsonFormat(Name.apply, "first", "middle", "last", "suffix")
-    implicit val ratingFormat: RootJsonFormat[Rating] = jsonFormat(Rating.apply, "code", "age")
-    implicit val principalFormat: RootJsonFormat[Principal] = jsonFormat(Principal.apply, "name", "facebookLikes")
-    implicit val formatFormat: RootJsonFormat[Format] = jsonFormat(Format.apply, "color", "language", "aspectRatio", "duration")
-    implicit val productionFormat: RootJsonFormat[Production] = jsonFormat(Production.apply, "country", "budget", "gross", "titleYear")
-    implicit val reviewsFormat: RootJsonFormat[Reviews] = jsonFormat(Reviews.apply, "imdbScore", "facebookLikes", "contentRating", "numUsersReview", "numUsersVoted", "numCriticReviews", "totalFacebookLikes")
-    implicit val movieFormat: RootJsonFormat[Movie] = jsonFormat(Movie.apply, "format", "production", "reviews", "director", "actor1", "actor2", "actor3", "title", "genres", "plotKeywords", "imdb")
-  }
+    // 20 points
+    // TO BE IMPLEMENTED 
 
+
+
+
+
+
+
+    // STUB
+    // END SOLUTION
+  }
 
   implicit object IngestibleMovie extends IngestibleMovie
 
@@ -129,12 +129,11 @@ object Movie extends App {
 
   //Hint: Serialize the input to Json format and deserialize back to Object, check the result is still equal to original input.
   def testSerializationAndDeserialization(ms: Seq[Movie]): Boolean = {
-    // Serialize
-    val json = ms.toJson
-    // Deserialize
-    val moviesBack: Seq[Movie] = json.convertTo[Seq[Movie]]
-    // Check if the round-trip preserved the data
-    ms == moviesBack
+    // 5 points
+    // TO BE IMPLEMENTED 
+
+
+???
   }
 
   def getMoviesFromCountry(country: String, movies: Iterator[Try[Movie]]): Try[Seq[Movie]] = {
