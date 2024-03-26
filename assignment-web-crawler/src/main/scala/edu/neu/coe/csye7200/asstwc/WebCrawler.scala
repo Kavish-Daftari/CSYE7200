@@ -137,11 +137,18 @@ object WebCrawler extends App {
         // Hint: write as two nested for-comprehensions: the outer one (first) based on Seq, the inner (second) based on Try.
         // In the latter, use the method createURL(Option[URL], String) to get the appropriate URL for a relative link.
         // Don't forget to run it through validateURL.
-        // 16 points.
-        def getURLs(ns: Node): Seq[Try[URL]] =
-// TO BE IMPLEMENTED 
- ???
-// END SOLUTION
+        // 16 points
+      // TO BE IMPLEMENTED
+          def getURLs(ns: Node): Seq[Try[URL]] = {
+            (ns \\ "a").flatMap { aNode =>
+              aNode.attribute("href").flatMap { hrefSeq =>
+                hrefSeq.headOption.map { href =>
+                  Try(new URL(url, href.text)).flatMap(validateURL)
+                }
+              }
+            }
+          }
+          // END SOLUTION
 
         def getLinks(g: String): Try[Seq[URL]] = {
             val ny: Try[Node] = HTMLParser.parse(g) recoverWith { case f => Failure(new RuntimeException(s"parse problem with URL $url: $f")) }
@@ -150,8 +157,13 @@ object WebCrawler extends App {
         // Hint: write as a for-comprehension, using getURLContent (above) and getLinks above. You will also need MonadOps.asFuture
         // 9 points.
 
-// TO BE IMPLEMENTED 
-         ???
+        // TO BE IMPLEMENTED
+      for {
+        content <- getURLContent(url)
+        parsedContent <- MonadOps.asFuture(Try(HTMLParser.parse(content)))
+        linksTry = parsedContent.flatMap(n => getLinks(n.toString))
+        links <- MonadOps.asFuture(linksTry)
+      } yield links
         // END SOLUTION
     }
 
