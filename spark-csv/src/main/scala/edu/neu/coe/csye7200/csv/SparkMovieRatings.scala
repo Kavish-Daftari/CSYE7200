@@ -15,13 +15,12 @@ object SparkMovieRatings {
     val df = spark.read.option("header", "true").csv(filePath)
     df.show()
 
-    val processedDf = calculateStatisticsByDirector(df)
+    val processedDf = calculateStatistics(df)
     processedDf.show()
   }
 
-  def calculateStatisticsByDirector(df: org.apache.spark.sql.DataFrame): org.apache.spark.sql.DataFrame = {
-    df.groupBy("director_name")
-      .agg(
+  def calculateStatistics(df: org.apache.spark.sql.DataFrame): org.apache.spark.sql.DataFrame = {
+    df.agg(
         mean("imdb_score").alias("mean_imdb_score"),
         stddev("imdb_score").alias("std_dev_imdb_score")
       )
